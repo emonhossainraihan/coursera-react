@@ -16,3 +16,19 @@ importing Bootstrap first and then the index.css later.
 So if we add our own customization CSS classes,
 that can override the default Bootstrap classes if required.
 So that's the reason why we import Bootstrap CSS first and then index.css later.
+
+# State
+
+Each component can store its own local information in its "state"
+
+- Private and fully controlled by the component
+- Can be passed as props to children
+- Never directly modify state
+
+# Props
+
+JSX attributes are passed into a component as a single object
+
+- Available in the component as "props"
+- Can pass in multiple attributes
+- Cannot modify props within the component
