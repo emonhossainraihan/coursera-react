@@ -32,3 +32,7 @@ JSX attributes are passed into a component as a single object
 - Available in the component as "props"
 - Can pass in multiple attributes
 - Cannot modify props within the component
+
+# Typescript
+
+leading pipe in typescript
