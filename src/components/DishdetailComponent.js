@@ -54,9 +54,13 @@ class CommentForm extends Component {
   };
 
   handleSubmit(values) {
-    console.log('Current State is: ' + JSON.stringify(values));
-    alert('Current State is: ' + JSON.stringify(values));
     this.toggleModal();
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
   }
   render() {
     return (
@@ -145,13 +149,13 @@ class CommentForm extends Component {
   }
 }
 
-const RenderComments = ({ comments }) => {
+const RenderComments = ({ comments, addComment, dishId }) => {
   if (comments != null) {
     const commentlist = comments.map((data) => (
       <li key={data.id}>
         <p>{data.comment}</p>
         <p>
-          --{data.author},{' '}
+          -- {data.author},{' '}
           <span>
             {new Intl.DateTimeFormat('en-US', {
               year: 'numeric',
@@ -166,7 +170,7 @@ const RenderComments = ({ comments }) => {
       <div className="col-12 col-md-5 m-1">
         <h4> Comments </h4>
         <ul className="list-unstyled">{commentlist}</ul>
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   } else return <div></div>;
@@ -194,8 +198,11 @@ const DishDetail = (props) => {
       </div>
       <div className="row">
         <RenderDish dish={dish} />
-
-        <RenderComments comments={comments} />
+        <RenderComments
+          comments={comments}
+          addComment={props.addComment}
+          dishId={props.dish.id} //dish is available because it cause the render
+        />
       </div>
     </div>
   );
