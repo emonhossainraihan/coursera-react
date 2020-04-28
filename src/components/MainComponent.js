@@ -13,6 +13,7 @@ import { connect } from 'react-redux';
 
 //! bring actions
 import { addComment, fetchDishes } from '../redux/ActionCreators';
+import { actions } from 'react-redux-form';
 
 class Main extends Component {
   componentDidMount() {
@@ -69,7 +70,13 @@ class Main extends Component {
             component={() => <Menu dishes={this.props.dishes} />}
           />
           <Route path="/menu/:dishId" component={DishWithId} />
-          <Route exact path="/contactus" component={Contact} />
+          <Route
+            exact
+            path="/contactus"
+            component={() => (
+              <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+            )}
+          />
           <Redirect to="/home" />
         </Switch>
         <Footer />
@@ -93,6 +100,9 @@ const mapDispatchToProps = (dispatch) => ({
   //Redux-thunk
   fetchDishes: () => {
     dispatch(fetchDishes());
+  },
+  resetFeedbackForm: () => {
+    dispatch(actions.reset('feedback'));
   },
 });
 
