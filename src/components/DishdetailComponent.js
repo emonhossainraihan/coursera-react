@@ -56,12 +56,13 @@ class CommentForm extends Component {
   handleSubmit(values) {
     console.log('Current State is: ' + JSON.stringify(values));
     alert('Current State is: ' + JSON.stringify(values));
+    this.toggleModal();
   }
   render() {
     return (
       <div>
         <Button outline onClick={this.toggleModal}>
-          <span className="fas fa-pen"></span> Submit Comment
+          <span className="fa fa-pencil fa-lg"></span> Submit Comment
         </Button>
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
           <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
@@ -76,6 +77,7 @@ class CommentForm extends Component {
                     model=".rating"
                     name="rating"
                     className="form-control"
+                    defaultValue="1"
                   >
                     <option>1</option>
                     <option>2</option>
@@ -130,11 +132,7 @@ class CommentForm extends Component {
               </Row>
               <Row className="form-group">
                 <Col>
-                  <Button
-                    type="submit"
-                    color="primary"
-                    onClick={this.toggleModal}
-                  >
+                  <Button type="submit" color="primary">
                     Submit
                   </Button>
                 </Col>
