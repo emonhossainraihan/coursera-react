@@ -17,6 +17,7 @@ import {
 } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { Control, LocalForm, Errors } from 'react-redux-form';
+import { Loading } from './LoadingComponent';
 
 const required = (val) => val && val.length;
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -177,35 +178,53 @@ const RenderComments = ({ comments, addComment, dishId }) => {
 };
 
 const DishDetail = (props) => {
-  const dish = props.dish;
-  const comments = props.comments;
-  if (dish == null) {
-    return <div></div>;
-  }
-  return (
-    <div className="container">
-      <div className="row">
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <Link to="/menu">Menu</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
-        </Breadcrumb>
-        <div className="col-12">
-          <h3>{dish.name}</h3>
-          <hr />
+  const { dish, comments, isLoading, errMess } = props;
+
+  if (isLoading) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Loading />
         </div>
       </div>
-      <div className="row">
-        <RenderDish dish={dish} />
-        <RenderComments
-          comments={comments}
-          addComment={props.addComment}
-          dishId={props.dish.id} //dish is available because it cause the render
-        />
+    );
+  } else if (errMess) {
+    return (
+      <div className="container">
+        <div className="row">
+          <h4>{props.errMess}</h4>
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else if (dish != null) {
+    return (
+      <div className="container">
+        <div className="row">
+          <Breadcrumb>
+            <BreadcrumbItem>
+              <Link to="/menu">Menu</Link>
+            </BreadcrumbItem>
+            <BreadcrumbItem active>{dish.name}</BreadcrumbItem>
+          </Breadcrumb>
+          <div className="col-12">
+            <h3>{dish.name}</h3>
+            <hr />
+          </div>
+        </div>
+        <div className="row">
+          <RenderDish dish={dish} />
+          <RenderComments
+            comments={comments}
+            addComment={props.addComment}
+            dishId={props.dish.id}
+            //dish is available because it cause the render
+          />
+        </div>
+      </div>
+    );
+  } else {
+    return <div></div>;
+  }
 };
 
 export default DishDetail;
