@@ -14,6 +14,8 @@ function RenderCard({ item, isLoading, errMess }) {
     return <Loading />;
   } else if (errMess) {
     return <h4>{errMess}</h4>;
+  } else if (item === undefined) {
+    return <h4>item:undefined</h4>;
   } else
     return (
       <Card>
